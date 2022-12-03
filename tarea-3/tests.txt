@@ -1,0 +1,23 @@
+# KERNEL: 	Entrada A: 00000001
+# KERNEL: 	Entrada B: 11111111
+# KERNEL: 	Operacion: 000
+# KERNEL: 	Resultado: 00000000
+# KERNEL: 	Flags: 01010000
+
+# KERNEL: 	Entrada A: 00000001
+# KERNEL: 	Entrada B: 10000000
+# KERNEL: 	Operacion: 000
+# KERNEL: 	Resultado: 10000001
+# KERNEL: 	Flags: 00000010
+
+# KERNEL: 	Entrada A: 00001111
+# KERNEL: 	Entrada B: 00000011
+# KERNEL: 	Operacion: 100
+# KERNEL: 	Resultado: 01111000
+# KERNEL: 	Flags: 00011000
+
+# KERNEL: 	Entrada A: 00001111
+# KERNEL: 	Entrada B: 00000011
+# KERNEL: 	Operacion: 111
+# KERNEL: 	Resultado: 00000001
+# KERNEL: 	Flags: 00011010

@@ -1,0 +1,6 @@
+\babel@toc {nil}{}
+\contentsline {section}{\numberline {1}Desarrollo de la tarea}{1}{section.1}%
+\contentsline {section}{\numberline {2}Movimiento Básico}{1}{section.2}%
+\contentsline {section}{\numberline {3}Estado de Carga}{2}{section.3}%
+\contentsline {section}{\numberline {4}Resultados y análisis}{3}{section.4}%
+\contentsline {section}{\numberline {5}Conclusiones}{7}{section.5}%
