@@ -1,4 +1,5 @@
 # Descripción
+
 Este es un compilado de las tareas que realicé luego de rendir el 
 ramo Arquitectura de Computadores de la Universidad Técnica 
 Federico Santa María.
@@ -38,5 +39,5 @@ Notas de las Tareas (2022)
 
 * Tarea 1: 73
 * Tarea 2: 82
-* Tarea 3: 76
-* Tarea 4: 70
+* Tarea 3: X
+* Tarea 4: X
