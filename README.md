@@ -39,5 +39,5 @@ Notas de las Tareas (2022)
 
 * Tarea 1: 73
 * Tarea 2: 82
-* Tarea 3: X
-* Tarea 4: X
+* Tarea 3: 90
+* Tarea 4: 93
