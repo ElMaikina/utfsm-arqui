@@ -11,16 +11,16 @@
 @ Datos suministrador por el enunciado
 .data
 	@ Funcion a ejecutar
-	func: .word 1		
+	func: .word 3
 
 	@ Largo del primer string o del conjunto de la funcion 3
-	len1: .word	7		
+	len1: .word	6	
 	
 	@ Largo del segundo string
-	len2: .word	0
+	len2: .word	4
 	
 	@ Conjunto numerico para las funciones 1 y 3
-	nums: .word 0, 2, 7, 1, -8, -2, -8, 1, 4
+	nums: .word 0, 2, 7, 1, -8, -2, -8
 	
 	@ Primer string para la funcion 2
 	str1: .asciz "dato"
@@ -111,17 +111,131 @@ funcionuno:
 	LDR r4, [r1, #28]
 	MUL r2, r2, r3
 	MUL r2, r2, r4
-	SUB r5, r5, r2	
+	SUB r5, r5, r2
 	
-	B CONTINUE
+	MOV r0, #0
+	MOV r1, #0
+	MOV r2, r5
+	bl printInt
+
+	B end
 
 @ Segunda función (subrutinas) : Ver si dos Strings son anagramas
 funciondos:
+	@ Carga el primer largo en memoria
+	LDR r1, =len1
+	LDR r1, [r1, #0]
 	
-	LDR r1, =str1
-	LDR r2, =str2
-	B CONTINUE
+	@ Carga el segundo largo en memoria
+	LDR r2, =len2
+	LDR r2, [r2, #0]
 
+	@ Salta a la funcion anagrama
+	B anag
+
+	B end
+
+@ Retorna 1 si los dos strings son anagramas
+anag:
+	@ Inicializa un vector vacio
+	MOV r0, #0
+
+	@ Compara si los largos son iguales
+	@ se asume que los largos siempre
+	@ están bien puestos
+	CMP r1, r2
+	BEQ anagtrue
+	B anagfalse
+
+@ La funcion retorna false y termina
+anagfalse:
+	B end
+
+@ La funcion retorna true y sigue
+anagtrue:
+	@ Nuestro índice para leer el str1
+	MOV r1, #0
+
+	anagloop:
+		@ Carga el primer string
+		MOV r3, #0
+		LDR r3, =str1
+
+		@ Revisa si el indice es menor al largo del string
+		CMP r1, r2
+		BEQ anagdone
+
+		@ Carga el siguiente caracter
+		LDRB r4, [r3, r1]
+
+		@ Avanza el índice
+		ADD r1, r1, #1
+
+		@ Desplaza el vector a la izquierda
+		LSL r0, r0, #4
+
+		@ Salta a la funcion vect
+		B vect		
+
+		B anagloop
+	anagdone:
+
+	B end
+
+
+@ Retorna 2 si los dos vectores son iguales
+vect:
+	@ Carga el segundo string
+	MOV r3, #0
+	LDR r3, =str2
+
+	@ Nuestro índice para leer el str2
+	MOV r6, #0
+
+	vectloop:
+		@ Carga el segundo string
+		MOV r3, #0
+		LDR r3, =str2
+
+		@ Revisa si el indice es menor al largo del string
+		CMP r6, r2
+		BEQ vectdone
+
+		@ Carga el siguiente caracter
+		LDRB r5, [r3, r6]
+
+		@ Avanza el índice
+		ADD r6, r6, #1
+
+		@ Salta a cont
+		B cont
+
+		B vectloop
+	vectdone:
+
+	B anagloop
+
+
+@ Cuenta la cantidad de veces que se repite un caracter
+@ retorna un vector con las cantidades
+cont:
+	@ Usamos el registro r0 como vector
+	@ cada posición de r0 indica la
+	@ repeticion de ese caracter
+	CMP r4, r5
+
+	@ Si los registros r4 y r5 son iguales
+	@ entonces va a la branch contadd
+	BEQ contadd
+	
+	@ Se devuelve a la branch original
+	@ independiente del resultado
+	B vectloop 
+	
+@ Suma al vector si es que los caracteres son iguales
+contadd:
+	ADD r0, r0, #1
+	B vectloop
 
 @ Tercera (vectores) : Suma de vectores y càlculo de magnitud 
 funciontres:
@@ -176,7 +290,7 @@ funciontres:
 		@ valor en memoria
 		LDR r3, [r1, r4]
 
-		@ Suma el movimiento a X
+		@ Suma el movimiento a Y
 		ADD r6, r6, r3
 		
 		@ Avanza el indice
@@ -186,10 +300,56 @@ funciontres:
 	
 	DONE:
 
-	B CONTINUE
+	@ Eleva X al cuadrado
+	MUL r5, r5, r5
 
-square:
+	@ Eleva Y al cuadrado
+	MUL r6, r6, r6
 
-root:
+	@ Guarda la suma de X e Y
+	@ al cuadrado
+	MOV r2, #0
+	ADD r2, r5, r6
+
+	@ Inicia la raiz
+	MOV r3, #1
+
+	WHILE:
+		@ Almacena la potencia de
+		@ la raiz
+		MOV r4, #0
+		ADD r4, r4, r3
+		MUL r4, r4, r4
+
+		CMP r4, r2
+
+		@ Si la raiz al cuadrado
+		@ es mayor a la potencia
+		@ entonces encontramos la
+		@ raiz
+		BGT EXIT
+
+		@ Agrega 1 a la raiz y
+		@ repite el loop
+		ADD r3, #1
+
+		B WHILE
+	EXIT:
+
+	@ Le resta 1 a la raiz ya que
+	@ queremos que trunque el valor
+	@ al entero mas cercano
+
+	@ Finalmente el valor de la magnitud
+	@ del vector queda en r3
+	SUB r3, r3, #1
+
+	MOV r0, #0
+	MOV r1, #0
+	MOV r2, r3
+	bl printInt
+
+	B end
+
 
 end:
